@@ -9,13 +9,15 @@ import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import com.reactnativenavigation.NavigationActivity;
+import com.reactnativenavigation.NavigationActivityDelegate;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 import expo.modules.splashscreen.singletons.SplashScreen;
 import expo.modules.splashscreen.SplashScreenImageResizeMode;
 
 
-public class MainActivity extends DevMenuAwareReactActivity {
+public class MainActivity extends NavigationActivity {
 
   @Override
   public void onNewIntent(Intent intent) {
@@ -49,23 +51,18 @@ public class MainActivity extends DevMenuAwareReactActivity {
     // Below line is handled by '@expo/configure-splash-screen' command and it's discouraged to modify it manually
   }
 
-
-    /**
+  /**
      * Returns the name of the main component registered from JavaScript.
      * This is used to schedule rendering of the component.
      */
-    @Override
-    protected String getMainComponentName() {
-        return "main";
-    }
+//    @Override
+//    protected String getMainComponentName() {
+//        return "main";
+//    }
 
     @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
-        return DevLauncherController.wrapReactActivityDelegate(this, () -> new ReactActivityDelegate(this, getMainComponentName()) {
-            @Override
-            protected ReactRootView createRootView() {
-                return new RNGestureHandlerEnabledRootView(MainActivity.this);
-            }
-        });
+        ReactActivityDelegate delegate = super.createReactActivityDelegate();
+       return DevLauncherController.wrapReactActivityDelegate(this, () -> delegate);
     }
 }
